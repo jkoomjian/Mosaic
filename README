@@ -1,0 +1,17 @@
+Compile sass with:
+~/workspaces_src/MosaicShake/base/static/bootstrap$ sass --watch sass:css
+
+Server Config:
+
+* install python
+* install django
+* apt-get install python-mysqldb
+* install python-pip
+* sudo pip install django-widget-tweaks
+* apt-get imagemagick
+* apt-get python-flickrapi
+
+
+DB:
+* add db
+* grant all on mosaic_shake.* to jonathan;

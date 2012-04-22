@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Photoset
+{% endblock %}
+
+
+{% block content %}
+<div class="row center mosaic_shake_app edit_photoset">
+    <div class="span4 clearfix">
+		<div id="img_col" class="thumb_box">
+
+			{% for img in curr_ps.images.all %}
+	    		<div class="thumb_cell">
+					<div class="img">
+						<img src="{{ settings.PS_WEB }}/{{ img.flickr_id }}_thumb.jpg" />
+					</div>
+	    		</div>
+		    {% endfor %}
+    	
+    	
+			
+			
+		</div>
+	</div>
+    <div class="span8">
+		<div class="work">
+			<div class="trash well">
+				Drag here to remove image
+			</div>
+			Drag to copy into another photoset:
+			<div class="other_photosets well thumb_box">
+				{% for ps in all_ps %}
+		    		<div class="thumb_cell">
+						<div class="img">
+							<img src="{{ settings.PS_WEB }}/{{ ps.get_cover_img_id }}_thumb.jpg" />
+						</div>
+		    		</div>
+			    {% endfor %}			
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

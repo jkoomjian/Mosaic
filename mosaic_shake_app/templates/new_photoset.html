@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Photoset
+{% endblock %}
+
+
+{% block content %}
+{% load widget_tweaks %}
+
+<div class="row center mosaic_shake_app new_photoset">
+    <div class="span8">
+    	
+    	<div class="">
+    		
+	      	<form action="/m/new_photoset/" method="post" class="form-horizontal">
+	      		{% csrf_token %}
+
+      			<div class="control-group">
+		            <label class="control-label" for="input01">Name:</label>
+        			<div class="controls">
+						{{ form.name|add_class:"input-xlarge"|attr:"placeholder:(ex. Eiffel Tower)" }}
+        			  <p class="help-block">{{ form.name.errors }}</p>
+		            </div>
+      			</div>
+
+      			<div class="control-group">
+		            <label class="control-label" for="input01"># Photos to get</label>
+        			<div class="controls">
+						{{ form.num_photos_to_get|add_class:"input-xlarge"|attr:"placeholder:10 to 100" }}
+						<p class="help-block">{{ form.num_photos_to_get.errors }}</p>
+		            </div>
+      			</div>
+
+      			<div class="control-group">
+		            <label class="control-label" for="input01">Search Query</label>
+        			<div class="controls">
+						{{ form.search_query|add_class:"input-xlarge"|attr:"placeholder:(ex. Paris)" }}
+						<p class="help-block">{{ form.search_query.errors }}</p>
+		            </div>
+      			</div>
+
+      			<div class="control-group">
+		            <label class="control-label" for="input01">Latitude/Longitude</label>
+        			<div class="controls">
+        				<div class="hidden">
+							{{ form.latitude|attr:"id:lat_form" }}
+							{{ form.longitude|attr:"id:lng_form" }}
+						</div>
+        				<div>(<span id="lat_dsp">0</span>, <span id="lng_dsp">0</span>)</div>
+        				<div id="map_outer">
+							<div id='bullseye'>+</div>
+    						<div id="map_canvas"></div>
+    					</div>
+		            </div>
+      			</div>
+
+      			<div class="control-group">
+        			<div class="controls">
+						<input type="submit" class="btn btn-primary" name="submitType" value="Download" />
+		            </div>
+      			</div>
+	      			
+			</form>
+    		
+    	</div>
+    	
+	</div>
+</div>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDPt29Jqwly4AJB_B_xCDM5qJU054mlAM8&sensor=false"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	    var myOptions = {
+	      zoom: 4,
+	      center: new google.maps.LatLng(37.0625, -95.677068),
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	    
+		google.maps.event.addListener(map, 'center_changed', function() {
+			var center = map.getCenter();
+			// alert("lat: " + center.lat() + " lng: " + center.lng());
+			$("#lat_dsp").html(center.lat());
+			$("#lng_dsp").html(center.lng());
+			$("#lat_form").val(center.lat());
+			$("#lng_form").val(center.lng());
+  		});
+	});
+	
+</script>
+
+{% endblock %}

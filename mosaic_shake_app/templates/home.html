@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row center mosaic_shake_app home">
+    <div class="span8">
+    	
+    	<div class="topic_box">
+    		<div class="headers clearfix">
+		    	<h2>Mosaics</h2> <h2><a href="/m/gallery/" class="gallery_link">View All</a></h2>
+	    	</div>
+	    	<div class="well mosaics thumb_box clearfix">
+	    		
+	    		<a class="thumb_cell" href="/m/new_mosaic">
+	    			<div class="img add"></div>
+	    			<div class="caption">New Mosaic</div>
+	    		</a>
+
+				{% for msc in all_mosaic %}
+		    		<a class="thumb_cell" href="/m/gallery/{{ msc.id }}">
+						<div class="img">
+							<img src="{{ settings.MSC_WEB }}/{{ msc.id }}_thumb.jpg" />
+						</div>
+		    			<div class="caption">{{ msc.name }}</div>
+		    		</a>
+			    {% endfor %}
+	    		
+	    	</div>
+    	</div>
+    	
+    	<div class="topic_box">
+	    	<h2>Photosets</h2>
+	    	<div class="well mosaics thumb_box clearfix">
+
+	    		<a class="thumb_cell" href="/m/new_photoset">
+	    			<div class="img add"></div>
+	    			<div class="caption">New Photoset</div>
+	    		</a>	
+
+				{% for ps in all_ps %}
+		    		<a class="thumb_cell" href="/m/edit_photoset/{{ ps.id }}">
+						<div class="img">
+							<img src="{{ settings.PS_WEB }}/{{ ps.get_cover_img_id }}_thumb.jpg" />
+						</div>
+		    			<div class="caption">{{ ps.name }}</div>
+		    		</a>
+			    {% endfor %}
+	    		
+	    	</div>
+    	</div>
+    	
+	</div>
+</div>
+
+{% endblock %}

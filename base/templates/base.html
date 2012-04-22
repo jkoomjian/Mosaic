@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- styles -->
+    <link href="/static/css/main.css" rel="stylesheet">
+	
+	<!-- scripts -->
+	<script src="/static/js/LAB.min.js"></script>
+	<script type="text/javascript">
+		$LAB
+			.script('/static/js/jquery.min.js')
+			.script('/static/js/underscore-min.js')
+			.script('/static/bootstrap/js/bootstrap.min.js')
+			.wait(function(){
+	        	//{% block page_js %}
+	        	//{% endblock %}
+			});
+	</script>
+
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div id="header" class="crazy_links">
+        <div id="logo">
+        	<h1>
+        		<a href="/">MosaicShake</a>
+        	</h1>
+    	</div>
+        <div id="login">
+            <h3>
+				{% if user.is_authenticated %}
+            		<a href="/m/home/">{{user.username}}'s Home</a>
+				{% else %}
+	                <a href="/auth/login/">Login</a>
+				{% endif %}
+            </h3>
+        </div>
+    </div>
+    
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+  </body>
+</html>

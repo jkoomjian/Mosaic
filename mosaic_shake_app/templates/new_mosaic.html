@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Mosaic
+{% endblock %}
+
+
+{% block content %}
+{% load widget_tweaks %}
+
+<div class="row center mosaic_shake_app new_mosaic">
+    <div class="span8">
+
+	  	<form action="/m/new_mosaic/" method="post" class="form-horizontal">
+	  		{% csrf_token %}
+	
+			<div class="control-group">
+	            <label class="control-label" for="input01">Name:</label>
+				<div class="controls">
+					{{ form.name|add_class:"input-xlarge"|attr:"placeholder:(ex. Eiffel Tower Mosaic)" }}
+				  <p class="help-block">{{ form.name.errors }}</p>
+	            </div>
+			</div>
+
+			<div class="control-group">
+	            <label class="control-label" for="input01">Photoset:</label>
+				<div class="controls">
+					{{ form.photoset|add_class:"input-xlarge" }}
+				  <p class="help-block">{{ form.photoset.errors }}</p>
+	            </div>
+			</div>
+	
+			<div class="control-group">
+	            <label class="control-label" for="input01">Tile Width</label>
+				<div class="controls">
+					{{ form.tile_width|add_class:"input-xlarge"|attr:"placeholder:Width (in px) of each tile" }}
+					<p class="help-block">{{ form.tile_width.errors }}</p>
+	            </div>
+			</div>
+
+			<div class="control-group">
+	            <label class="control-label" for="input01">Tile Height</label>
+				<div class="controls">
+					{{ form.tile_height|add_class:"input-xlarge"|attr:"placeholder:Height (in px) of each tile" }}
+					<p class="help-block">{{ form.tile_height.errors }}</p>
+	            </div>
+			</div>
+	
+			<div class="control-group">
+				<div class="controls">
+					<input type="submit" class="btn btn-primary" name="submitType" value="Start" />
+	            </div>
+			</div>
+	  			
+		</form>
+
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+
+{% block content %}
+
+{% load widget_tweaks %}
+<div class="row center auth login">
+    <div class="span8">
+
+		<div class="tabbable">
+		  <ul class="nav nav-tabs">
+		    <li class="active"><a href="#1" data-toggle="tab">Login</a></li>
+		    <li><a href="#2" data-toggle="tab">Sign Up</a></li>
+		  </ul>
+		  <div class="tab-content well">
+		    <div class="tab-pane active" id="1">
+		      <h3>Login:</h3>
+		      
+		      	<form action="/auth/login/" method="post">
+		      		{% csrf_token %}
+					{{ form.username.errors }}
+					{{ form.password.errors }}
+					{{ form.username|add_class:"span3"|attr:"placeholder: Username" }}
+					{{ form.password|add_class:"span3"|attr:"placeholder: Password" }}
+					<input type="submit" class="btn btn-primary" name="submitType" value="Login" />
+				</form>
+		      
+		    </div>
+		    <div class="tab-pane" id="2">
+		      <h3>Sign Up</h3>
+
+		      	<form action="/auth/login/" method="post">
+
+		      		{% csrf_token %}
+					{{ form.username.errors }}
+					{{ form.password.errors }}
+					{{ form.password2.errors }}
+					{{ form.username|add_class:"span2"|attr:"placeholder: Username" }}
+					{{ form.password|add_class:"span2"|attr:"placeholder: Password" }}
+					{{ form.password2|add_class:"span2"|attr:"placeholder: Password Again" }}
+
+					<input type="submit" class="btn btn-primary" name="submitType" value="Sign Up" />
+				</form>
+
+		    </div>
+		  </div>
+		</div>
+     
+    </div>
+</div>
+    
+{% endblock %}

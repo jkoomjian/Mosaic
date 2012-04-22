@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Gallery
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row center mosaic_shake_app gallery">
+    <div class="span12">
+
+		<div class="carousel">
+			<a class="carousel-control left" href="#myCarousel">&lsaquo;</a>
+			<a class="carousel-control right" href="#myCarousel">&rsaquo;</a>
+		
+			<img id="msc_img" src="{{ settings.MSC_WEB }}/{{ msc.id }}.png" />
+			<div id="caption" class="caption">{{ msc.name }}</div>
+		</div>
+
+	</div>
+</div>
+
+<script type=text/javascript>
+	window.msc_start_img = {'pk': '{{ msc.id }}', 'fields': {'name': '{{ msc.name }}' }};
+	window.msc_user_id = '{{user_id}}';
+</script>
+
+{% endblock %}
+
+{% block page_js %}
+
+
+$(document).ready(function(){
+	window.msc = [];
+	msc.imgs = [];
+	msc.curr_img = 0;
+	msc.prev = function() {
+		if (msc.curr_img == 0) return;
+		msc.curr_img--;
+		msc.displayCurrImg();
+	}
+	msc.next = function() {
+		var curr_id = msc.imgs[ msc.curr_img ].pk
+		var usr_src = msc_user_id && msc_user_id != 'None' ? msc_user_id+'/' : '';
+		var url = '/m/gallery_next_json/'+usr_src+curr_id;
+		$.getJSON(url, function(data) {
+			msc.imgs.push(data[0]);
+			msc.curr_img++;
+			msc.displayCurrImg();
+		});	
+	}
+	msc.displayCurrImg = function() {
+		var curr_img = msc.imgs[msc.curr_img];
+		var src = '{{ settings.MSC_WEB }}/'+curr_img.pk+'.png';
+		$("#msc_img").attr("src", src);
+		$("#caption").html( curr_img.fields.name );
+	}
+
+	msc.imgs.push(msc_start_img);
+	$(".carousel-control.left").bind('click', msc.prev);	
+	$(".carousel-control.right").bind('click', msc.next);
+	
+});
+
+{% endblock %}
