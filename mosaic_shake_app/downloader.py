@@ -46,13 +46,15 @@ class Downloader():
                         not saved_imgs.has_key( photo.attrib['id'] ):
                         #we have a usable image!
                         print photo.attrib['id'] + ' ' + photoSize.attrib['label'] + ' ' + photoSize.attrib['width'] + 'x' + photoSize.attrib['height'] + ' ' + photoSize.attrib['source']
-                        saved_imgs[ photo.attrib['id'] ] = "1"
-                        #save image to db
-                        self.saveToDb(photo, thumb, large)
-                        #save the image + thumb
-                        self.downloadImg(photo, thumb, large)
-                        
-                        self.count += 1
+                        try:
+                            #save image to db
+                            self.saveToDb(photo, thumb, large)
+                            #save the image + thumb
+                            self.downloadImg(photo, thumb, large)
+                            saved_imgs[ photo.attrib['id'] ] = "1"
+                            self.count += 1
+                        except:
+                            pass
                         
             #check if we are out of results
             if len(photos[0]) < 10: break;
