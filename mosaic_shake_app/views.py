@@ -1,4 +1,4 @@
-from mosaic_shake_app.models import Photoset, Mosaic
+from mosaic_shake_app.models import Photoset, Mosaic, Image
 from mosaic_shake_app.forms import PhotosetForm, MosaicForm
 from django.shortcuts import render_to_response
 from mosaic_shake_app.downloader import Downloader
@@ -41,7 +41,7 @@ def home(request):
 
 @login_required
 def new_photoset(request):
-    form = MosaicForm(request.POST) if request.method == 'POST' else MosaicForm()
+    form = PhotosetForm(request.POST) if request.method == 'POST' else PhotosetForm()
     if request.method == 'POST' and form.is_valid():
         ## Create the new photoset
         ps = Photoset.objects.create(
@@ -92,3 +92,22 @@ def new_mosaic(request):
         
         return HttpResponseRedirect('/m/gallery/{uid}/{id}'.format(uid=request.user.id,id=msc.id))
     return render_to_response('new_mosaic.html', {'form': form}, context_instance=RequestContext(request))
+
+@login_required
+def delete_img_json(request):
+    #using GET to avoid dealing with csrf for now
+    img_id = request.GET.get('img_id')
+    ps_id = request.GET.get('ps_id')
+    ps = Photoset.objects.get(id=ps_id)
+    img = Image.objects.get(id=img_id)
+    print 'delete '+ img_id
+    ## remove from photoset
+    ps.images.remove(img)
+    return HttpResponse("")
+    
+@login_required
+def copy_img_json(request):
+    dest_ps = Photoset.objects.get(id=request.GET.get('dest_ps_id'))
+    img = Image.objects.get(id=request.GET.get('img_id'))
+    dest_ps.images.add(img)
+    return HttpResponse("")

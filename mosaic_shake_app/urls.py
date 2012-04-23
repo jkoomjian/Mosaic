@@ -11,5 +11,7 @@ urlpatterns = patterns('mosaic_shake_app.views',
      url(r'^new_photoset/', 'new_photoset'),
      url(r'^edit_photoset/(?P<ps_id>\d+)', 'edit_photoset'),
      url(r'^new_mosaic/', 'new_mosaic'),
+     url(r'^delete_img_json/', 'delete_img_json'),
+     url(r'^copy_img_json/', 'copy_img_json'),
 )
 

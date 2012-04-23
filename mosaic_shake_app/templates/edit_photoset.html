@@ -7,39 +7,99 @@ Create Photoset
 
 {% block content %}
 <div class="row center mosaic_shake_app edit_photoset">
-    <div class="span4 clearfix">
-		<div id="img_col" class="thumb_box">
+    <div class="span4 clearfix dnd_source">
+		<div id="img_col" class="thumb_box dnd_source">
 
 			{% for img in curr_ps.images.all %}
-	    		<div class="thumb_cell">
+	    		<div class="thumb_cell" img_id='{{img.pk}}' id='img_{{img.pk}}'>
 					<div class="img">
 						<img src="{{ settings.PS_WEB }}/{{ img.flickr_id }}_thumb.jpg" />
 					</div>
 	    		</div>
 		    {% endfor %}
-    	
-    	
-			
 			
 		</div>
 	</div>
     <div class="span8">
 		<div class="work">
-			<div class="trash well">
+			<div class="trash well dnd_target">
 				Drag here to remove image
 			</div>
 			Drag to copy into another photoset:
-			<div class="other_photosets well thumb_box">
+			<div class="other_photosets well thumb_box dnd_target">
 				{% for ps in all_ps %}
-		    		<div class="thumb_cell">
+		    		<div class="thumb_cell" ps_id="{{ ps.pk }}">
 						<div class="img">
 							<img src="{{ settings.PS_WEB }}/{{ ps.get_cover_img_id }}_thumb.jpg" />
 						</div>
+		    			<div class="caption">{{ ps.name }}</div>
 		    		</div>
 			    {% endfor %}			
 			</div>
 		</div>
 	</div>
 </div>
+
+{% endblock %}
+
+
+{% block page_js %}
+$(document).ready(function(){
+	
+	$('.dnd_source .thumb_cell').bind('dragstart', function(e){
+		e.originalEvent.dataTransfer.setData('img_id', $(this).attr('img_id') );
+	});
+	
+	//trash
+	$(".dnd_target.trash").bind('dragenter', function(e) {
+		e.preventDefault();
+	});
+	$(".dnd_target.trash").bind('dragover', function(e) {
+		e.preventDefault();
+		//console.log('drag enter');
+		$(this).addClass('active');
+		$(this).bind('dragleave', function() {
+			//console.log('drag leave');
+			$(this).removeClass('active');
+		});
+	});
+	$(".dnd_target.trash").bind('drop', function(e) {
+		e.preventDefault();
+		console.log('delete photo ' + e.originalEvent.dataTransfer.getData('img_id'));
+		msc_delete_img(e.originalEvent.dataTransfer.getData('img_id'));
+		$(this).removeClass('active');
+	});
+	
+	//copy to photoset
+	$(".dnd_target .thumb_cell").bind('dragenter', function(e) {
+		e.preventDefault();
+	});
+	$(".dnd_target .thumb_cell").bind('dragover', function(e) {
+		e.preventDefault();
+		$(this).addClass('active');
+		$(this).bind('dragleave', function() {
+			$(this).removeClass('active');
+		});
+	});
+	$(".dnd_target .thumb_cell").bind('drop', function(e) {
+		e.preventDefault();
+		console.log('copy photo ' + e.originalEvent.dataTransfer.getData('img_id') + " dest ps: " + $(this).attr('ps_id'));
+		msc_copy_img(e.originalEvent.dataTransfer.getData('img_id'), $(this).attr('ps_id'));
+		$(this).removeClass('active');
+	});
+	
+	function msc_delete_img(img_id) {
+		$.get('/m/delete_img_json/', {'img_id':img_id, 'ps_id':'{{curr_ps.pk}}'}, function(data) {
+			$("#img_"+img_id).remove();
+			alert('image deleted');
+		}, "json");
+	}
+	
+	function msc_copy_img(img_id, dest_ps_id) {
+		$.get('/m/copy_img_json/', {'img_id':img_id, 'dest_ps_id':dest_ps_id}, function(data) {
+			alert('image copied');
+		}, "json");		
+	}
+});
 
 {% endblock %}

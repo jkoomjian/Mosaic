@@ -4449,3 +4449,12 @@ a.thumbnail:hover {
   width: 75px;
   height: 75px;
   margin: 20px; }
+.mosaic_shake_app.edit_photoset .dnd_source .thumb_cell:hover {
+  border: 3px solid #46a546;
+  margin: 17px;
+  cursor: move; }
+.mosaic_shake_app.edit_photoset .dnd_target .thumb_cell.active {
+  border: 3px solid #ffc40d;
+  margin: 17px; }
+.mosaic_shake_app.edit_photoset .dnd_target.trash.active {
+  border: 3px solid #ffc40d; }
