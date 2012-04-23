@@ -54,3 +54,13 @@ Login
 </div>
     
 {% endblock %}
+
+{% block page_js %}
+
+$(document).ready(function(){
+	if ('{{signup}}') {
+		  $("a[href='#2']").click()
+	}
+});
+
+{% endblock %}

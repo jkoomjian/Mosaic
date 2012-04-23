@@ -36,7 +36,8 @@ def login_view(request):
                 if form.cleaned_data['password'] != form.cleaned_data['password2']:
                     errors = form._errors.setdefault("password2", ErrorList())
                     errors.append(u"Passwords do not match!")
-                    return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+                    print("at signup!")
+                    return render_to_response('login.html', {'form': form, 'signup':'true'}, context_instance=RequestContext(request))
                 
                 #Create the new user!
                 print "username: " + form.cleaned_data['username'] + \
