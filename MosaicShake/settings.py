@@ -11,6 +11,7 @@ WORKING_DIR = STATIC_FILES + "/working"
 PS_WEB = "/static/ps_imgs"
 MSC_WEB = "/static/msc_imgs"
 
+LOGIN_URL = '/auth/login/'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

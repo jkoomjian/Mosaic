@@ -32,7 +32,7 @@ class Downloader():
                                         page=self.page
                                     )
             for photo in photos[0]:
-                print photo.attrib['title']
+#                print str(photo.attrib['title'])
                 
                 #make sure this photo is the right size
                 photoSizes = flickr.photos_getSizes(photo_id=photo.attrib['id'])
@@ -59,11 +59,11 @@ class Downloader():
             self.page+=1
 
     def saveToDb(self, photo, thumb, large):
-        print "saving: " + photo.attrib['id'] + " title: " + photo.attrib['title']
+#        print "saving: " + photo.attrib['id'] + " title: " + unicode(photo.attrib['title'], 'utf-8', errors='ignore')
         img = Image.objects.create(
                                    flickr_id = photo.attrib['id'],
-                                   flickr_title = photo.attrib['title'],
-                                   flickr_author = photo.attrib['owner'],
+                                   flickr_title = unicode(photo.attrib['title'], 'utf-8', errors='ignore'),
+                                   flickr_author = unicode(photo.attrib['owner'], 'utf-8', errors='ignore'),
                                    flickr_html_url = large.attrib['url']
                                    )
         self.photoset.images.add(img)
