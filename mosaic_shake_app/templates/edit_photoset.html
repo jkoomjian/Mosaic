@@ -91,13 +91,13 @@ $(document).ready(function(){
 	function msc_delete_img(img_id) {
 		$.get('/m/delete_img_json/', {'img_id':img_id, 'ps_id':'{{curr_ps.pk}}'}, function(data) {
 			$("#img_"+img_id).remove();
-			alert('image deleted');
+			//alert('image deleted');
 		}, "json");
 	}
 	
 	function msc_copy_img(img_id, dest_ps_id) {
 		$.get('/m/copy_img_json/', {'img_id':img_id, 'dest_ps_id':dest_ps_id}, function(data) {
-			alert('image copied');
+			//alert('image copied');
 		}, "json");		
 	}
 });

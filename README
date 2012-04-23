@@ -1,5 +1,5 @@
 Compile sass with:
-~/workspaces_src/MosaicShake/base/static/bootstrap$ sass --watch sass:css
+~/workspaces_src/MosaicShake/base/static/bootstrap$ sass -I bootstrap/sass --watch sass:css
 
 Server Config:
 
