@@ -7,6 +7,7 @@
 /*--------------------- Mixins -----------------------*/
 @mixin thumb_box {
   .thumb_box {
+    height: 365px;
     overflow: auto;
     .thumb_cell {
       display: block; width: 100px; height: 125px; text-align: center; float: left; margin: 0 10px 10px 0;
@@ -54,8 +55,9 @@
 }
 
 .mosaic_shake_app.gallery {
-  text-align: center;
+  text-align: center; position: relative;
   .caption {margin-top: 15px;}
+  #refresh_img {position: absolute; right: -50px; display: block; z-index: 1000;}
 }
 
 .mosaic_shake_app.home {
@@ -74,7 +76,7 @@
 }
 
 .mosaic_shake_app.edit_photoset {
-  #img_col {height: 80%; min-height: 500px; width: 300px; scroll: auto; border: 1px solid $grayLight; float: right; margin-right: 30px;}
+  #img_col {min-height: 500px; width: 300px; scroll: auto; border: 1px solid $grayLight; float: right; margin-right: 30px;}
   .work {height: 80%;}
   @include thumb-box;
   .thumb_box div.thumb_cell {width: 75px; height: 75px; margin: 20px;}

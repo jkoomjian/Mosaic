@@ -10,6 +10,11 @@ Gallery
 <div class="row center mosaic_shake_app gallery">
     <div class="span12">
 
+		{% if user %}
+			<a id="refresh_img" href="/m/recreate_mosaic/{{msc.pk}}">
+				<img src="/static/img/refresh.png" />
+			</a>
+		{% endif %}
 		<div class="carousel">
 			<a class="carousel-control left" href="#myCarousel">&lsaquo;</a>
 			<a class="carousel-control right" href="#myCarousel">&rsaquo;</a>
@@ -55,6 +60,7 @@ $(document).ready(function(){
 		var src = '{{ settings.MSC_WEB }}/'+curr_img.pk+'.png';
 		$("#msc_img").attr("src", src);
 		$("#caption").html( curr_img.fields.name );
+		$("#refresh_img").attr("href", "/m/recreate_mosaic/"+curr_img.pk);
 	}
 
 	msc.imgs.push(msc_start_img);

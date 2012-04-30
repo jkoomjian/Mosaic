@@ -111,3 +111,18 @@ def copy_img_json(request):
     img = Image.objects.get(id=request.GET.get('img_id'))
     dest_ps.images.add(img)
     return HttpResponse("")
+
+@login_required
+def recreate_msc(request, msc_id):
+    src_msc= Mosaic.objects.get(id=msc_id)
+    ## Create the new photoset in db
+    msc = Mosaic.objects.create(
+                            user=request.user,
+                            name=src_msc.name,
+                            photoset=src_msc.photoset,
+                            tile_width=src_msc.tile_width,
+                            tile_height=src_msc.tile_height
+                            )
+    #Create the mosaic file
+    Mosaicer(msc).run()
+    return HttpResponseRedirect('/m/gallery/{uid}/{id}'.format(uid=request.user.id,id=msc.id))
